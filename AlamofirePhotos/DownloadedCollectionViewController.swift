@@ -33,14 +33,14 @@ class DownloadedCollectionViewController: UICollectionViewController {
         super.viewDidAppear(animated)
         
         if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as NSURL? {
-            var error: NSError?
+            //var error: NSError?
             
             let urls = try! NSFileManager.defaultManager().contentsOfDirectoryAtURL(directoryURL, includingPropertiesForKeys: nil, options: [])
             
-            if error == nil {
+            //if error == nil {
                 downloadedPhotoURLs = urls as [NSURL]?
                 collectionView!.reloadData()
-            }
+            //}
         }
     }
 

@@ -26,15 +26,15 @@ class PhotosCollectionViewController: UICollectionViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "ShowPhoto" {
+            //(segue.destinationViewController as! PhotoViewerViewController).photoID = sender!.integerValue
+            //(segue.destinationViewController as! PhotoViewerViewController).hidesBottomBarWhenPushed = true
+        }
     }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -54,7 +54,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        //performSegueWithIdentifier("ShowPhoto", sender: (self.photos.objectAtIndex(indexPath.item) as! PhotoInfo).id)
+        performSegueWithIdentifier("ShowPhoto", sender: (self.photos.objectAtIndex(indexPath.item) as! PhotoInfo).id)
     }
     
     func setupView() {
