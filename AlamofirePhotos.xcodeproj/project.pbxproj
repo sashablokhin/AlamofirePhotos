@@ -12,6 +12,8 @@
 		AB1924B11C735E0900BA94BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB1924AF1C735E0900BA94BF /* Main.storyboard */; };
 		AB1924B31C735E0900BA94BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB1924B21C735E0900BA94BF /* Assets.xcassets */; };
 		AB1924B61C735E0900BA94BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB1924B41C735E0900BA94BF /* LaunchScreen.storyboard */; };
+		AB1924BE1C73655D00BA94BF /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1924BD1C73655D00BA94BF /* PhotosCollectionViewController.swift */; };
+		AB1924C01C73657700BA94BF /* DownloadedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1924BF1C73657700BA94BF /* DownloadedCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		AB1924B21C735E0900BA94BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB1924B51C735E0900BA94BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB1924B71C735E0900BA94BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB1924BD1C73655D00BA94BF /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
+		AB1924BF1C73657700BA94BF /* DownloadedCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,8 @@
 			children = (
 				AB1924AB1C735E0900BA94BF /* AppDelegate.swift */,
 				AB1924AD1C735E0900BA94BF /* ViewController.swift */,
+				AB1924BD1C73655D00BA94BF /* PhotosCollectionViewController.swift */,
+				AB1924BF1C73657700BA94BF /* DownloadedCollectionViewController.swift */,
 				AB1924AF1C735E0900BA94BF /* Main.storyboard */,
 				AB1924B21C735E0900BA94BF /* Assets.xcassets */,
 				AB1924B41C735E0900BA94BF /* LaunchScreen.storyboard */,
@@ -135,8 +141,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB1924BE1C73655D00BA94BF /* PhotosCollectionViewController.swift in Sources */,
 				AB1924AE1C735E0900BA94BF /* ViewController.swift in Sources */,
 				AB1924AC1C735E0900BA94BF /* AppDelegate.swift in Sources */,
+				AB1924C01C73657700BA94BF /* DownloadedCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
