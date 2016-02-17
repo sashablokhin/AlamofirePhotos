@@ -44,10 +44,10 @@
             </objects>
             <point key="canvasLocation" x="1563" y="122"/>
         </scene>
-        <!--View Controller-->
+        <!--Photo View Controller-->
         <scene sceneID="jtd-Zn-fRM">
             <objects>
-                <viewController id="Da5-hd-DnE" sceneMemberID="viewController">
+                <viewController id="Da5-hd-DnE" customClass="PhotoViewController" customModule="AlamofirePhotos" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kpc-0n-udr"/>
                         <viewControllerLayoutGuide type="bottom" id="OiC-G7-yBh"/>
