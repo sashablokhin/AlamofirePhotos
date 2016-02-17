@@ -174,29 +174,42 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate, UIPopoverPres
     // MARK: Download Photo
     
     func downloadPhoto() {
-        Alamofire.request(Five100px.Router.PhotoInfo(photoInfo!.id, .XLarge)).validate().responseJSON {
-            response in
+        Alamofire.request(Five100px.Router.PhotoInfo(photoInfo!.id, .XLarge)).validate().responseObject { (response: Response<PhotoInfo, NSError>) in
+            let photoInfo = response.result.value
+            let error = response.result.error
             
-            if (response.result.error == nil) {
-                if let JSON = response.result.value {
-                    let jsonDictionary = (JSON as! NSDictionary)
-                    let imageURL = jsonDictionary.valueForKeyPath("photo.image_url") as! String
-                    
-                    let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = {
-                        (temporaryURL, response) in
-                        
-                        if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as NSURL? {
-                            return directoryURL.URLByAppendingPathComponent("\(self.photoInfo!.id).\(response.suggestedFilename)")
-                        }
-                        
-                        return temporaryURL
-                    }
+            if error == nil && photoInfo != nil {
+                let imageURL = photoInfo!.url
                 
-                    Alamofire.download(.GET, imageURL, destination: destination)
+                let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = {
+                    (temporaryURL, response) in
+                    
+                    if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as NSURL? {
+                        return directoryURL.URLByAppendingPathComponent("\(self.photoInfo!.id).\(response.suggestedFilename)")
+                    }
+                    
+                    return temporaryURL
+                }
+                
+                let progressIndicatorView = UIProgressView(frame: CGRect(x: 0.0, y: 80.0, width: self.view.bounds.width, height: 10.0))
+                progressIndicatorView.tintColor = UIColor.blueColor()
+                self.view.addSubview(progressIndicatorView)
+                
+                Alamofire.download(.GET, imageURL, destination: destination).progress {
+                    (_, totalBytesRead, totalBytesExpectedToRead) in
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        progressIndicatorView.setProgress(Float(totalBytesRead) / Float(totalBytesExpectedToRead), animated: true)
+                        
+                        if totalBytesRead == totalBytesExpectedToRead {
+                            progressIndicatorView.removeFromSuperview()
+                        }
+                    }
                 }
             }
         }
     }
+    
     
     func showActions() {
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
