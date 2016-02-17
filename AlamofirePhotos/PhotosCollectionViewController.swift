@@ -16,10 +16,17 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     var photos = NSMutableOrderedSet()
     let refreshControl = UIRefreshControl()
+    
+    var populatingPhotos = false
+    var currentPage = 1
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        
+        populatePhotos()
+        
+        /*
 
         Alamofire.request(.GET, "https://api.500px.com/v1/photos", parameters: ["consumer_key": "uiGZOMxiSv7SJITSMZ2G4nwZwLe8Ek0j9SaE4nr0"]).responseJSON { response in
             
@@ -34,7 +41,7 @@ class PhotosCollectionViewController: UICollectionViewController {
                 
                 self.collectionView!.reloadData()
             }
-        }
+        }*/
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,6 +110,48 @@ class PhotosCollectionViewController: UICollectionViewController {
         collectionView!.addSubview(refreshControl)
     }
     
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView.contentOffset.y + view.frame.size.height > scrollView.contentSize.height * 0.8 {
+            populatePhotos()
+        }
+    }
+    
+    func populatePhotos() {
+        if populatingPhotos {
+            return
+        }
+        
+        populatingPhotos = true
+        
+        Alamofire.request(Five100px.Router.PopularPhotos(self.currentPage)).responseJSON {
+            response in
+            
+            if response.result.error == nil {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+                    
+                    if let JSON = response.result.value {
+                        
+                        // Use Swift’s filter function to filter out NSFW (Not Safe For Work) images
+                        
+                        let photoInfos = ((JSON as! NSDictionary).valueForKey("photos") as! [NSDictionary]).filter({ ($0["nsfw"] as! Bool) == false }).map { PhotoInfo(id: $0["id"] as! Int, url: $0["image_url"] as! String) }
+                    
+                        let lastItem = self.photos.count
+                        self.photos.addObjectsFromArray(photoInfos)
+
+                        let indexPaths = (lastItem..<self.photos.count).map { NSIndexPath(forItem: $0, inSection: 0) }
+
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.collectionView!.insertItemsAtIndexPaths(indexPaths)
+                        }
+                    
+                        self.currentPage++
+                    }
+                }
+            }
+            self.populatingPhotos = false
+        }
+    }
+    
     func handleRefresh() {
         
     }
@@ -111,6 +160,10 @@ class PhotosCollectionViewController: UICollectionViewController {
 
 class PhotosCollectionViewCell: UICollectionViewCell {
     let imageView = UIImageView()
+    
+    override func prepareForReuse() {
+        imageView.image = nil
+    }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
