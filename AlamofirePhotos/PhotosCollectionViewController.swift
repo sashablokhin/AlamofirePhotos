@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 private let reuseIdentifier = "cell"
 private let footerViewIdentifier = "footerView"
@@ -19,6 +20,21 @@ class PhotosCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+
+        Alamofire.request(.GET, "https://api.500px.com/v1/photos", parameters: ["consumer_key": "uiGZOMxiSv7SJITSMZ2G4nwZwLe8Ek0j9SaE4nr0"]).responseJSON { response in
+            
+            if let JSON = response.result.value {
+                let photoInfos = (JSON.valueForKey("photos") as! [NSDictionary]).filter({
+                    ($0["nsfw"] as! Bool) == false
+                }).map {
+                    PhotoInfo(id: $0["id"] as! Int, url: $0["image_url"] as! String)
+                }
+                
+                self.photos.addObjectsFromArray(photoInfos)
+                
+                self.collectionView!.reloadData()
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +61,14 @@ class PhotosCollectionViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! PhotosCollectionViewCell
+        
+        let imageURL = (photos[indexPath.row] as! PhotoInfo).url
+        
+        Alamofire.request(.GET, imageURL).response { _, _, data, _ in
+            let image = UIImage(data: data!)
+            cell.imageView.image = image
+        }
+        
         return cell
     }
 
