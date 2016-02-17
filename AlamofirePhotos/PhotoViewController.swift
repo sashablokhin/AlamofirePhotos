@@ -174,18 +174,49 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate, UIPopoverPres
     // MARK: Download Photo
     
     func downloadPhoto() {
+        Alamofire.request(Five100px.Router.PhotoInfo(photoInfo!.id, .XLarge)).validate().responseJSON {
+            response in
+            
+            if (response.result.error == nil) {
+                if let JSON = response.result.value {
+                    let jsonDictionary = (JSON as! NSDictionary)
+                    let imageURL = jsonDictionary.valueForKeyPath("photo.image_url") as! String
+                    
+                    let destination: (NSURL, NSHTTPURLResponse) -> (NSURL) = {
+                        (temporaryURL, response) in
+                        
+                        if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0] as NSURL? {
+                            return directoryURL.URLByAppendingPathComponent("\(self.photoInfo!.id).\(response.suggestedFilename)")
+                        }
+                        
+                        return temporaryURL
+                    }
+                
+                    Alamofire.download(.GET, imageURL, destination: destination)
+                }
+            }
+        }
     }
     
     func showActions() {
-        let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Download Photo")
-        actionSheet.showFromToolbar((navigationController?.toolbar)!)
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let downloadAction = UIAlertAction(title: "Download", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.downloadPhoto()
+        })
+        
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+        })
+        
+        optionMenu.addAction(downloadAction)
+        optionMenu.addAction(cancelAction)
+        
+        self.presentViewController(optionMenu, animated: true, completion: nil)
     }
     
-    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-        if buttonIndex == 1 {
-            downloadPhoto()
-        }
-    }
     
     // MARK: Gesture Recognizers
     
