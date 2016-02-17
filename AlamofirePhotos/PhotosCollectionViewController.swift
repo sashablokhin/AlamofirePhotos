@@ -52,9 +52,9 @@ class PhotosCollectionViewController: UICollectionViewController {
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "ShowPhoto" {
-            //(segue.destinationViewController as! PhotoViewerViewController).photoID = sender!.integerValue
-            //(segue.destinationViewController as! PhotoViewerViewController).hidesBottomBarWhenPushed = true
+        if segue.identifier == "showPhoto" {
+            (segue.destinationViewController as! PhotoViewController).photoID = sender!.integerValue
+            (segue.destinationViewController as! PhotoViewController).hidesBottomBarWhenPushed = true
         }
     }
 
@@ -105,7 +105,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        performSegueWithIdentifier("ShowPhoto", sender: (self.photos.objectAtIndex(indexPath.item) as! PhotoInfo).id)
+        performSegueWithIdentifier("showPhoto", sender: (self.photos.objectAtIndex(indexPath.item) as! PhotoInfo).id)
     }
     
     func setupView() {

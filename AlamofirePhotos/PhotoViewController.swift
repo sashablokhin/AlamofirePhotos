@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class PhotoViewController: UIViewController, UIScrollViewDelegate, UIPopoverPresentationControllerDelegate, UIActionSheetDelegate {
     var photoID: Int = 0
@@ -21,6 +22,39 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate, UIPopoverPres
         super.viewDidLoad()
         
         setupView()
+        
+        loadPhoto()
+    }
+    
+    func loadPhoto() {
+        Alamofire.request(Five100px.Router.PhotoInfo(self.photoID, .Large)).validate().responseObject { (response: Response<PhotoInfo, NSError>) in
+            let photoInfo = response.result.value
+            let error = response.result.error
+            
+            if error == nil {
+                self.photoInfo = photoInfo
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.addButtomBar()
+                    self.title = photoInfo!.name
+                }
+                
+                Alamofire.request(.GET, photoInfo!.url).validate().responseImage { response in
+                    
+                    let image = response.result.value
+                    let error = response.result.error
+                    
+                    if error == nil && image != nil {
+                        self.imageView.image = image
+                        self.imageView.frame = self.centerFrameFromImage(image)
+                        
+                        self.spinner.stopAnimating()
+                        
+                        self.centerScrollViewContents()
+                    }
+                }
+            }
+        }
     }
     
     func setupView() {
