@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 class PhotoViewController: UIViewController, UIScrollViewDelegate, UIPopoverPresentationControllerDelegate, UIActionSheetDelegate {
-    var photoID: Int = 0
+    var photoID = 0
     
     let scrollView = UIScrollView()
     let imageView = UIImageView()
@@ -117,23 +117,21 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate, UIPopoverPres
     }
     
     func showDetails() {
-        /*
-        let photoDetailsViewController = storyboard?.instantiateViewControllerWithIdentifier("PhotoDetails") as? PhotoDetailsViewController
-        photoDetailsViewController?.modalPresentationStyle = .OverCurrentContext
-        photoDetailsViewController?.modalTransitionStyle = .CoverVertical
-        photoDetailsViewController?.photoInfo = photoInfo
+        let photoDetailViewController = storyboard?.instantiateViewControllerWithIdentifier("PhotoDetail") as? PhotoDetailViewController
+        photoDetailViewController?.modalPresentationStyle = .OverCurrentContext
+        photoDetailViewController?.modalTransitionStyle = .CoverVertical
+        photoDetailViewController?.photoInfo = photoInfo
         
-        presentViewController(photoDetailsViewController!, animated: true, completion: nil)*/
+        presentViewController(photoDetailViewController!, animated: true, completion: nil)
     }
     
     func showComments() {
-        /*
         let photoCommentsViewController = storyboard?.instantiateViewControllerWithIdentifier("PhotoComments") as? PhotoCommentsViewController
         photoCommentsViewController?.modalPresentationStyle = .Popover
         photoCommentsViewController?.modalTransitionStyle = .CoverVertical
         photoCommentsViewController?.photoID = photoID
         photoCommentsViewController?.popoverPresentationController?.delegate = self
-        presentViewController(photoCommentsViewController!, animated: true, completion: nil)*/
+        presentViewController(photoCommentsViewController!, animated: true, completion: nil)
     }
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {

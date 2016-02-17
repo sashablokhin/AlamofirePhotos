@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		AB1924AC1C735E0900BA94BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1924AB1C735E0900BA94BF /* AppDelegate.swift */; };
-		AB1924AE1C735E0900BA94BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1924AD1C735E0900BA94BF /* ViewController.swift */; };
 		AB1924B11C735E0900BA94BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB1924AF1C735E0900BA94BF /* Main.storyboard */; };
 		AB1924B31C735E0900BA94BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB1924B21C735E0900BA94BF /* Assets.xcassets */; };
 		AB1924B61C735E0900BA94BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB1924B41C735E0900BA94BF /* LaunchScreen.storyboard */; };
@@ -16,6 +15,8 @@
 		AB1924C01C73657700BA94BF /* DownloadedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1924BF1C73657700BA94BF /* DownloadedCollectionViewController.swift */; };
 		AB1924C21C73706200BA94BF /* Five100px.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1924C11C73706200BA94BF /* Five100px.swift */; };
 		AB1924C41C748AE400BA94BF /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1924C31C748AE400BA94BF /* PhotoViewController.swift */; };
+		AB1924C61C749EBA00BA94BF /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1924C51C749EBA00BA94BF /* PhotoDetailViewController.swift */; };
+		AB1924C81C749EEE00BA94BF /* PhotoCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1924C71C749EEE00BA94BF /* PhotoCommentsViewController.swift */; };
 		F0FE43EA1CEBDD9D2F165D7B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009E80A14E506EEA6C2395BC /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -23,7 +24,6 @@
 		009E80A14E506EEA6C2395BC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB1924A81C735E0900BA94BF /* AlamofirePhotos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlamofirePhotos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB1924AB1C735E0900BA94BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AB1924AD1C735E0900BA94BF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		AB1924B01C735E0900BA94BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AB1924B21C735E0900BA94BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB1924B51C735E0900BA94BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -32,6 +32,8 @@
 		AB1924BF1C73657700BA94BF /* DownloadedCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadedCollectionViewController.swift; sourceTree = "<group>"; };
 		AB1924C11C73706200BA94BF /* Five100px.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Five100px.swift; sourceTree = "<group>"; };
 		AB1924C31C748AE400BA94BF /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		AB1924C51C749EBA00BA94BF /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
+		AB1924C71C749EEE00BA94BF /* PhotoCommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCommentsViewController.swift; sourceTree = "<group>"; };
 		E703185380F38AF444949A95 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E981BBC028C587022B9CA5D3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,9 +81,10 @@
 			isa = PBXGroup;
 			children = (
 				AB1924AB1C735E0900BA94BF /* AppDelegate.swift */,
-				AB1924AD1C735E0900BA94BF /* ViewController.swift */,
 				AB1924BD1C73655D00BA94BF /* PhotosCollectionViewController.swift */,
 				AB1924C31C748AE400BA94BF /* PhotoViewController.swift */,
+				AB1924C51C749EBA00BA94BF /* PhotoDetailViewController.swift */,
+				AB1924C71C749EEE00BA94BF /* PhotoCommentsViewController.swift */,
 				AB1924BF1C73657700BA94BF /* DownloadedCollectionViewController.swift */,
 				AB1924C11C73706200BA94BF /* Five100px.swift */,
 				AB1924AF1C735E0900BA94BF /* Main.storyboard */,
@@ -223,8 +226,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB1924BE1C73655D00BA94BF /* PhotosCollectionViewController.swift in Sources */,
-				AB1924AE1C735E0900BA94BF /* ViewController.swift in Sources */,
+				AB1924C81C749EEE00BA94BF /* PhotoCommentsViewController.swift in Sources */,
 				AB1924C21C73706200BA94BF /* Five100px.swift in Sources */,
+				AB1924C61C749EBA00BA94BF /* PhotoDetailViewController.swift in Sources */,
 				AB1924AC1C735E0900BA94BF /* AppDelegate.swift in Sources */,
 				AB1924C01C73657700BA94BF /* DownloadedCollectionViewController.swift in Sources */,
 				AB1924C41C748AE400BA94BF /* PhotoViewController.swift in Sources */,
