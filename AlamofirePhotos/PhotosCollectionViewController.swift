@@ -15,6 +15,8 @@ private let footerViewIdentifier = "footerView"
 class PhotosCollectionViewController: UICollectionViewController {
     
     var photos = NSMutableOrderedSet()
+    
+    let imageCache = NSCache()
     let refreshControl = UIRefreshControl()
     
     var populatingPhotos = false
@@ -64,7 +66,10 @@ class PhotosCollectionViewController: UICollectionViewController {
         // #warning Incomplete implementation, return the number of items
         return photos.count
     }
-
+    
+    
+    
+/*
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         /*
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! PhotosCollectionViewCell
@@ -97,7 +102,41 @@ class PhotosCollectionViewController: UICollectionViewController {
         }
         
         return cell
+    }*/
+    
+    
+    
+    
+    
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! PhotosCollectionViewCell
+        
+        let imageURL = (photos.objectAtIndex(indexPath.row) as! PhotoInfo).url
+        
+        cell.request?.cancel()
+        
+        if let image = self.imageCache.objectForKey(imageURL) as? UIImage {
+            cell.imageView.image = image
+        } else {
+            cell.imageView.image = nil
+            
+            cell.request = Alamofire.request(.GET, imageURL).validate(contentType: ["image/*"]).responseImage {
+                response in
+                
+                let error = response.result.error
+                let image = response.result.value
+                
+                if error == nil && image != nil {
+                    self.imageCache.setObject(image!, forKey: response.request!.URLString)
+                    cell.imageView.image = image
+                }
+            }
+        }
+        
+        return cell
     }
+    
+    
 
     
     override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -173,7 +212,16 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
     
     func handleRefresh() {
+        refreshControl.beginRefreshing()
         
+        self.photos.removeAllObjects()
+        self.currentPage = 1
+        
+        self.collectionView!.reloadData()
+        
+        refreshControl.endRefreshing()
+        
+        populatePhotos()
     }
 }
 
