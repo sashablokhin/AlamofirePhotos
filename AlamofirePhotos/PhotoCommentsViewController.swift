@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class PhotoCommentsViewController: UITableViewController {
     var photoID: Int = 0
@@ -20,6 +21,17 @@ class PhotoCommentsViewController: UITableViewController {
         
         title = "Comments"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .Done, target: self, action: "dismiss")
+        
+        Alamofire.request(Five100px.Router.Comments(photoID, 1)).validate().responseCollection { (response: Response<[Comment], NSError>) -> Void in
+            let comments = response.result.value!
+            let error = response.result.error
+            
+            if error == nil {
+                self.comments = comments
+                
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func dismiss() {
@@ -34,6 +46,24 @@ class PhotoCommentsViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! PhotoCommentTableViewCell
+        
+        cell.userFullnameLabel.text = comments![indexPath.row].userFullname
+        cell.commentLabel.text = comments![indexPath.row].commentBody
+        
+        cell.userImageView.image = nil
+        
+        let imageURL = comments![indexPath.row].userPictureURL
+        
+        Alamofire.request(.GET, imageURL).validate().responseImage { response  in
+            let image = response.result.value
+            let error = response.result.error
+            
+            if error == nil {
+                if response.request!.URLString.isEqual(imageURL) {
+                    cell.userImageView.image = image
+                }
+            }
+        }
         
         return cell
     }

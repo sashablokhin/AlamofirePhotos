@@ -226,9 +226,9 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="commentLabel" destination="2rd-Wq-5Og" id="WX4-l0-V1p"/>
-                                    <outlet property="userFullnameLabel" destination="9mB-YW-2cm" id="Gcy-JB-Qys"/>
-                                    <outlet property="userImageView" destination="f07-cM-bFj" id="Co8-DW-x50"/>
+                                    <outlet property="commentLabel" destination="2rd-Wq-5Og" id="b2r-oi-5D5"/>
+                                    <outlet property="userFullnameLabel" destination="9mB-YW-2cm" id="XnQ-UM-YbC"/>
+                                    <outlet property="userImageView" destination="f07-cM-bFj" id="QF0-CD-Z0t"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
