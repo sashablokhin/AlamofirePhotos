@@ -27,7 +27,6 @@ class PhotosCollectionViewController: UICollectionViewController {
         populatePhotos()
         
         /*
-
         Alamofire.request(.GET, "https://api.500px.com/v1/photos", parameters: ["consumer_key": "uiGZOMxiSv7SJITSMZ2G4nwZwLe8Ek0j9SaE4nr0"]).responseJSON { response in
             
             if let JSON = response.result.value {
@@ -67,6 +66,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        /*
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! PhotosCollectionViewCell
         
         let imageURL = (photos[indexPath.row] as! PhotoInfo).url
@@ -74,6 +74,26 @@ class PhotosCollectionViewController: UICollectionViewController {
         Alamofire.request(.GET, imageURL).response { _, _, data, _ in
             let image = UIImage(data: data!)
             cell.imageView.image = image
+        }
+        
+        return cell*/
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! PhotosCollectionViewCell
+        
+        let imageURL = (photos.objectAtIndex(indexPath.row) as! PhotoInfo).url
+        
+        cell.imageView.image = nil
+        cell.request?.cancel()
+        
+        cell.request = Alamofire.request(.GET, imageURL).responseImage {
+            response in
+            
+            let error = response.result.error
+            let image = response.result.value
+            
+            if error == nil && image != nil {
+                cell.imageView.image = image
+            }
         }
         
         return cell
@@ -160,6 +180,7 @@ class PhotosCollectionViewController: UICollectionViewController {
 
 class PhotosCollectionViewCell: UICollectionViewCell {
     let imageView = UIImageView()
+    var request: Alamofire.Request?
     
     override func prepareForReuse() {
         imageView.image = nil

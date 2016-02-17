@@ -10,6 +10,29 @@ import Foundation
 import Alamofire
 
 
+extension Alamofire.Request {
+    public static func imageResponseSerializer() -> ResponseSerializer<UIImage, NSError> {
+        return ResponseSerializer { request, response, data, error in
+            guard error == nil else { return .Failure(error!) }
+            guard let validData = data else {
+                let failureReason = "Image parsing failed."
+                let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+                return .Failure(error)
+            }
+            guard let image = UIImage(data: validData, scale: UIScreen.mainScreen().scale) else {
+                let failureReason = "Image format failed."
+                let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+                return .Failure( error)
+            }
+            return .Success(image)
+        }
+    }
+    public func responseImage(completionHandler: Response<UIImage, NSError> -> Void) -> Self {
+        return response(responseSerializer: Request.imageResponseSerializer(), completionHandler: completionHandler)
+    }
+}
+
+
 struct Five100px {
     
     enum Router: URLRequestConvertible {
